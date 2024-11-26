@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "artist")
 public class Artist {
@@ -24,29 +26,5 @@ public class Artist {
 	public Artist(Integer artistId, String name) {
 		this.artistId = artistId;
 		this.name = name;
-	}
-
-	public Integer getArtistId() {
-		return artistId;
-	}
-
-	public void setArtistId(Integer artistId) {
-		this.artistId = artistId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@Override
-	public String toString() {
-		return "Artist{" +
-				"artistId=" + artistId +
-				", name='" + name + '\'' +
-				'}';
 	}
 }

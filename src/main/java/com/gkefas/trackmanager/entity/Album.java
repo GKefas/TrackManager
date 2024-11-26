@@ -23,10 +23,9 @@ public class Album {
 	@ManyToOne
 	@JoinColumn(name = "ArtistId", referencedColumnName = "ArtistId")
 	private Artist artist;
-//
-//	@OneToMany
-//	@JoinColumn(name = "trackId")
-//	private List<Track> tracks = new ArrayList<>();
+
+	@OneToMany(mappedBy = "album")
+	private List<Track> tracks = new ArrayList<>();
 
 	// No-argument constructor for JPA
 	public Album() {

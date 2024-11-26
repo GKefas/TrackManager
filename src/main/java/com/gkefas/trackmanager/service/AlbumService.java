@@ -2,11 +2,14 @@ package com.gkefas.trackmanager.service;
 
 import com.gkefas.trackmanager.entity.Album;
 import com.gkefas.trackmanager.repository.AlbumRepository;
+import com.gkefas.trackmanager.dto.AlbumDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AlbumService {
@@ -19,13 +22,17 @@ public class AlbumService {
 	}
 
 	// Get all albums
-	public List<Album> getAllAlbums() {
-		return albumRepository.findAll();
+	public List<AlbumDTO> getAllAlbums() {
+		List<Album> albums = albumRepository.findAll();
+		return albums.stream()
+				.map(AlbumDTO::new)
+				.collect(Collectors.toList());
 	}
 
 	// Get album by ID
-	public Optional<Album> getAlbumById(Integer id) {
-		return albumRepository.findById(id);
+	public Optional<AlbumDTO> getAlbumById(Integer id) {
+		Optional<Album> album = albumRepository.findById(id);
+		return album.map(AlbumDTO::new);
 	}
 
 }

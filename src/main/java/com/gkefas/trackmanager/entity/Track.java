@@ -30,17 +30,17 @@ public class Track {
 
 	// Many-to-one relationship with Album
 	@ManyToOne
-	@JoinColumn(name = "AlbumId")
+	@JoinColumn(name = "AlbumId", referencedColumnName = "AlbumId")
 	private Album album;
 
 	// Many-to-one relationship with Genre
 	@ManyToOne
-	@JoinColumn(name = "GenreId")
+	@JoinColumn(name = "GenreId", referencedColumnName = "GenreId")
 	private Genre genre;
 
 	// Many-to-one relationship with MediaTypeRepository
 	@ManyToOne
-	@JoinColumn(name = "MediaTypeId")
+	@JoinColumn(name = "MediaTypeId", referencedColumnName = "MediaTypeId")
 	private MediaType mediaType;
 
 	// No-argument constructor for JPA
