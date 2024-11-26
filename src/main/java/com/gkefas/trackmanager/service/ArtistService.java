@@ -64,5 +64,4 @@ public class ArtistService {
 		artistDTO.setTracks(trackDTOs);
 		return artistDTO;
 	}
-
 }

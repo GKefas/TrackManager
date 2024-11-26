@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/artists")
@@ -20,6 +19,7 @@ public class ArtistController {
 	public ArtistController(ArtistService artistService, AlbumService albumService) {
 		this.artistService = artistService;
 	}
+
 
 	@GetMapping({"", "/"})
 	public List<Artist> getAllAlbums(@RequestParam(required = false) String name) {

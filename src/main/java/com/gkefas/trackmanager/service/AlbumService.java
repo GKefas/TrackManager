@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,18 +25,20 @@ public class AlbumService {
 		this.mapperUtil = mapperUtil;
 	}
 
-	// Get all albums
-	public List<AlbumDTO> getAllAlbums() {
-		List<Album> albums = albumRepository.findAll();
-		return albums.stream()
-				.map(mapperUtil::toAlbumDTO)
-				.collect(Collectors.toList());
-	}
-
 	// Get album by ID
 	public Optional<AlbumDTO> getAlbumById(Integer id) {
 		Optional<Album> album = albumRepository.findById(id);
 		return album.map(mapperUtil::toAlbumDTO);
 	}
 
+	public List<AlbumDTO> getAlbumsByFilters(Map<String, String> filters) {
+		String artistName = filters.get("artistName");
+		String title = filters.get("title");
+
+		List<Album> albums = albumRepository.findAlbumsByArtistAndTitle(artistName, title);
+
+		return albums.stream()
+				.map(mapperUtil::toAlbumDTO)
+				.collect(Collectors.toList());
+	}
 }
