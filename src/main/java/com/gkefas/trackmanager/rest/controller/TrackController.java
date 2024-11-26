@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequestMapping("/api/tracks")
 public class TrackController {
 
-	private TrackService trackService;
+	private final TrackService trackService;
 
 	@Autowired
 	public TrackController(TrackService trackService) {

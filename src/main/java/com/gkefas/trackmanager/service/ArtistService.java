@@ -35,11 +35,8 @@ public class ArtistService {
 		return artistRepository.findAll();
 	}
 
-	public Optional<Artist> getArtistByName(String name) {
-		Optional<Artist> artist = artistRepository.findByName(name);
-		if (artist.isEmpty())
-			throw new RuntimeException("Artist not found");
-		return artist;
+	public Artist getArtistByName(String name) {
+		return artistRepository.findByNameIgnoreCase(name);
 
 	}
 

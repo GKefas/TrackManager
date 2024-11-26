@@ -22,18 +22,16 @@ public class ArtistController {
 	}
 
 	@GetMapping({"", "/"})
-	public List<Artist> getAllAlbums() {
-		return artistService.getAllArtists();
+	public List<Artist> getAllAlbums(@RequestParam String name) {
+		if (name == null || name.isEmpty())
+			return artistService.getAllArtists();
+
+		Artist artist = artistService.getArtistByName(name);
+		return artist != null ? List.of(artist) : List.of();
 	}
 
 	@GetMapping("/{id}")
 	public ArtistDTO getArtistById(@PathVariable int id) {
 		return artistService.getArtistWithTracks(id);
-	}
-
-	@GetMapping("/id")
-	public Optional<Artist> getArtistIdByName(@RequestParam String name) {
-		name = name.trim();
-		return artistService.getArtistByName(name);
 	}
 }
