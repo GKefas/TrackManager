@@ -22,10 +22,9 @@ public class ArtistController {
 	}
 
 	@GetMapping({"", "/"})
-	public List<Artist> getAllAlbums(@RequestParam String name) {
+	public List<Artist> getAllAlbums(@RequestParam(required = false) String name) {
 		if (name == null || name.isEmpty())
 			return artistService.getAllArtists();
-
 		Artist artist = artistService.getArtistByName(name);
 		return artist != null ? List.of(artist) : List.of();
 	}
