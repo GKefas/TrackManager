@@ -7,6 +7,7 @@ import com.gkefas.trackmanager.entity.Artist;
 import com.gkefas.trackmanager.repository.AlbumRepository;
 import com.gkefas.trackmanager.repository.ArtistRepository;
 import com.gkefas.trackmanager.repository.TrackRepository;
+import com.gkefas.trackmanager.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,14 @@ public class ArtistService {
 	private final ArtistRepository artistRepository;
 	private final TrackRepository trackRepository;
 	private final AlbumRepository albumRepository;
+	private final MapperUtil mapperUtil;
 
 	@Autowired
-	public ArtistService(ArtistRepository artistRepository, TrackRepository trackRepository, AlbumRepository albumRepository) {
+	public ArtistService(ArtistRepository artistRepository, TrackRepository trackRepository, AlbumRepository albumRepository, MapperUtil mapperUtil) {
 		this.artistRepository = artistRepository;
 		this.trackRepository = trackRepository;
 		this.albumRepository = albumRepository;
+		this.mapperUtil = mapperUtil;
 	}
 
 	public List<Artist> getAllArtists() {
@@ -41,9 +44,7 @@ public class ArtistService {
 
 		// Create ArtistDTO and map artist information
 		Artist artist = artistOptional.get();
-		ArtistDTO artistDTO = new ArtistDTO();
-		artistDTO.setArtistId(artist.getArtistId());
-		artistDTO.setName(artist.getName());
+		ArtistDTO artistDTO = mapperUtil.toArtistDTO(artist);
 
 		// Fetch all albums of the artist
 		List<Album> albums = albumRepository.findByArtist_ArtistId(artist.getArtistId());
@@ -51,18 +52,7 @@ public class ArtistService {
 		// Collect tracks from all albums and map them to TrackDTO
 		List<TrackDTO> trackDTOs = albums.stream()
 				.flatMap(album -> trackRepository.findByAlbum_AlbumId(album.getAlbumId()).stream())
-				.map(track -> {
-					TrackDTO trackDTO = new TrackDTO();
-					trackDTO.setTrackId(track.getTrackId());
-					trackDTO.setName(track.getName());
-					trackDTO.setComposer(track.getComposer());
-					trackDTO.setMilliseconds(track.getMilliseconds());
-					trackDTO.setBytes(track.getBytes());
-					trackDTO.setUnitPrice(track.getUnitPrice());
-					trackDTO.setGenre(track.getGenre().getName());
-					trackDTO.setMediaType(track.getMediaType().getName());
-					return trackDTO;
-				})
+				.map(mapperUtil::toTrackDTO)
 				.collect(Collectors.toList());
 
 		// Set the list of tracks in the ArtistDTO

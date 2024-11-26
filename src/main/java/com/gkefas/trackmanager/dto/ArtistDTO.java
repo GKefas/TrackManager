@@ -12,13 +12,4 @@ public class ArtistDTO {
 	private Integer artistId;
 	private String name;
 	private List<TrackDTO> tracks;
-
-	public ArtistDTO() {
-	}
-
-	public ArtistDTO(Integer artistId, String name, List<TrackDTO> tracks) {
-		this.artistId = artistId;
-		this.name = name;
-		this.tracks = new ArrayList<>(tracks);
-	}
 }

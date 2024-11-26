@@ -16,25 +16,4 @@ public class TrackDTO {
 	private String genre;
 	private String mediaType;
 
-	public TrackDTO() {
-
-	}
-
-	// Constructor to populate from Track entity
-	public TrackDTO(Track track) {
-		this.trackId = track.getTrackId();
-		this.name = track.getName();
-		this.composer = track.getComposer();
-		this.milliseconds = track.getMilliseconds();
-		this.bytes = track.getBytes();
-		this.unitPrice = track.getUnitPrice();
-
-		if (track.getGenre() != null) {
-			this.genre = track.getGenre().getName();
-		}
-
-		if (track.getMediaType() != null) {
-			this.mediaType = track.getMediaType().getName();
-		}
-	}
 }
