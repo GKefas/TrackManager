@@ -15,5 +15,5 @@ public class TrackDTO {
 	private Double unitPrice;
 	private String genre;
 	private String mediaType;
-
+	private String album;
 }

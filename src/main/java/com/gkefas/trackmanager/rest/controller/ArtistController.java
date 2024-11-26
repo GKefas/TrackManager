@@ -5,12 +5,10 @@ import com.gkefas.trackmanager.entity.Artist;
 import com.gkefas.trackmanager.service.AlbumService;
 import com.gkefas.trackmanager.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/artists")
@@ -31,5 +29,11 @@ public class ArtistController {
 	@GetMapping("/{id}")
 	public ArtistDTO getArtistById(@PathVariable int id) {
 		return artistService.getArtistWithTracks(id);
+	}
+
+	@GetMapping("/id")
+	public Optional<Artist> getArtistIdByName(@RequestParam String name) {
+		name = name.trim();
+		return artistService.getArtistByName(name);
 	}
 }

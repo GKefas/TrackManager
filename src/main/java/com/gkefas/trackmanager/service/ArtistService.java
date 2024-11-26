@@ -35,6 +35,14 @@ public class ArtistService {
 		return artistRepository.findAll();
 	}
 
+	public Optional<Artist> getArtistByName(String name) {
+		Optional<Artist> artist = artistRepository.findByName(name);
+		if (artist.isEmpty())
+			throw new RuntimeException("Artist not found");
+		return artist;
+
+	}
+
 	public ArtistDTO getArtistWithTracks(Integer artistId) {
 		// Fetch the artist by ID
 		Optional<Artist> artistOptional = artistRepository.findById(artistId);

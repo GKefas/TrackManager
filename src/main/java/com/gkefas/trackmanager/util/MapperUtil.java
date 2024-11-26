@@ -56,6 +56,7 @@ public class MapperUtil {
 		trackDTO.setUnitPrice(track.getUnitPrice());
 		trackDTO.setGenre(track.getGenre().getName());
 		trackDTO.setMediaType(track.getMediaType().getName());
+		trackDTO.setAlbum(track.getAlbum().getTitle());
 		return trackDTO;
 	}
 }
