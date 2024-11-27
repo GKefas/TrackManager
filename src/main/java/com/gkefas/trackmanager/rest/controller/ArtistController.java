@@ -2,11 +2,13 @@ package com.gkefas.trackmanager.rest.controller;
 
 import com.gkefas.trackmanager.dto.ArtistDTO;
 import com.gkefas.trackmanager.entity.Artist;
+import com.gkefas.trackmanager.rest.exception.NotFoundException;
 import com.gkefas.trackmanager.service.AlbumService;
 import com.gkefas.trackmanager.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 @RestController
@@ -31,6 +33,9 @@ public class ArtistController {
 
 	@GetMapping("/{id}")
 	public ArtistDTO getArtistById(@PathVariable int id) {
+		if (id <= 0 || id > artistService.getAllArtists().size()) {
+			throw new NotFoundException("Artist id not found - " + id);
+		}
 		return artistService.getArtistWithTracks(id);
 	}
 }

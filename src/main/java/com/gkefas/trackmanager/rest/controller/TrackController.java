@@ -1,6 +1,7 @@
 package com.gkefas.trackmanager.rest.controller;
 
 import com.gkefas.trackmanager.dto.TrackDTO;
+import com.gkefas.trackmanager.rest.exception.NotFoundException;
 import com.gkefas.trackmanager.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +25,18 @@ public class TrackController {
 
 	@GetMapping({"", "/"})
 	public List<TrackDTO> getAllTracks() {
-		return trackService.getAllTracks();
+		List<TrackDTO> tracks = trackService.getAllTracks();
+		if (tracks.isEmpty()) {
+			throw new NotFoundException("No tracks found");
+		}
+		return tracks;
 	}
 
 	@GetMapping("/{id}")
 	public Optional<TrackDTO> getTrackById(@PathVariable int id) {
+		if (id <= 0 || id > trackService.getAllTracks().size()) {
+			throw new NotFoundException("Track id not found - " + id);
+		}
 		return trackService.getTrackById(id);
 	}
 }

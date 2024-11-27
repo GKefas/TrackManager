@@ -25,6 +25,11 @@ public class AlbumService {
 		this.mapperUtil = mapperUtil;
 	}
 
+	public List<AlbumDTO> getAllAlbums() {
+		List<Album> albums = albumRepository.findAll();
+		return albums.stream().map(mapperUtil::toAlbumDTO).collect(Collectors.toList());
+	}
+
 	// Get album by ID
 	public Optional<AlbumDTO> getAlbumById(Integer id) {
 		Optional<Album> album = albumRepository.findById(id);
