@@ -6,10 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 @RestControllerAdvice
 public class GeneralExceptionHandler {
@@ -24,7 +28,6 @@ public class GeneralExceptionHandler {
 			NullPointerException.class,
 			SQLException.class,
 			IOException.class,
-			RuntimeException.class
 	})
 	public ResponseEntity<ErrorResponse> handleException(Exception e) {
 		error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -44,7 +47,7 @@ public class GeneralExceptionHandler {
 
 	// Handle timeout exceptions (408 Request Timeout)
 	@ExceptionHandler(SocketTimeoutException.class)
-	public ResponseEntity<ErrorResponse> handleTimeoutException() {
+	public ResponseEntity<ErrorResponse> handleException() {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setStatus(HttpStatus.REQUEST_TIMEOUT.value());
 		errorResponse.setMessage("Request timed out. Please try again later.");
@@ -53,13 +56,29 @@ public class GeneralExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.REQUEST_TIMEOUT);
 	}
 
-	@ExceptionHandler(NotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleException(NotFoundException e) {
-		error.setStatus(HttpStatus.NOT_FOUND.value());
-		error.setMessage(e.getMessage());
+
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<ErrorResponse> handleException(MethodArgumentTypeMismatchException e) {
+		StringBuilder wrongIdProvided = new StringBuilder("unknown");
+
+		Pattern pattern = Pattern.compile("\"([^\"]*)\"");
+		Matcher matcher = pattern.matcher(e.getMessage());
+
+		Stream.of(matcher)
+				.filter(Matcher::find)
+				.map(m -> m.group(1))
+				.findFirst()
+				.ifPresent(id -> {
+					wrongIdProvided.setLength(0);
+					wrongIdProvided.append(id);
+				});
+
+		String errorMessage = "Can't resolve id - '%s'".formatted(wrongIdProvided);
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		error.setMessage(errorMessage);
 		error.setErrorTimeStamp(System.currentTimeMillis());
 
-		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
 
