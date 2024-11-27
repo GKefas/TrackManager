@@ -3,12 +3,12 @@ package com.gkefas.trackmanager.rest.controller;
 import com.gkefas.trackmanager.dto.ArtistDTO;
 import com.gkefas.trackmanager.entity.Artist;
 import com.gkefas.trackmanager.rest.exception.NotFoundException;
-import com.gkefas.trackmanager.service.AlbumService;
 import com.gkefas.trackmanager.service.ArtistService;
+import com.gkefas.trackmanager.util.GlobalInitBinder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.InvalidParameterException;
 import java.util.List;
 
 @RestController
@@ -16,12 +16,18 @@ import java.util.List;
 public class ArtistController {
 
 	private final ArtistService artistService;
+	private final GlobalInitBinder globalInitBinder;
 
 	@Autowired
-	public ArtistController(ArtistService artistService, AlbumService albumService) {
+	public ArtistController(ArtistService artistService, GlobalInitBinder globalInitBinder) {
 		this.artistService = artistService;
+		this.globalInitBinder = globalInitBinder;
 	}
 
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		globalInitBinder.initBinder(binder);
+	}
 
 	@GetMapping({"", "/"})
 	public List<Artist> getAllAlbums(@RequestParam(required = false) String name) {
@@ -32,7 +38,7 @@ public class ArtistController {
 	}
 
 	@GetMapping("/{id}")
-	public ArtistDTO getArtistById(@PathVariable int id) {
+	public ArtistDTO getArtistById(@PathVariable Integer id) {
 		if (id <= 0 || id > artistService.getAllArtists().size()) {
 			throw new NotFoundException("Artist id not found - " + id);
 		}

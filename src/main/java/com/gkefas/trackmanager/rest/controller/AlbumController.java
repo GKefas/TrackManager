@@ -3,7 +3,9 @@ package com.gkefas.trackmanager.rest.controller;
 import com.gkefas.trackmanager.dto.AlbumDTO;
 import com.gkefas.trackmanager.rest.exception.NotFoundException;
 import com.gkefas.trackmanager.service.AlbumService;
+import com.gkefas.trackmanager.util.GlobalInitBinder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,10 +17,18 @@ import java.util.Optional;
 public class AlbumController {
 
 	private final AlbumService albumService;
+	private final GlobalInitBinder globalInitBinder;
+
 
 	@Autowired
-	public AlbumController(AlbumService albumService) {
+	public AlbumController(AlbumService albumService, GlobalInitBinder globalInitBinder) {
 		this.albumService = albumService;
+		this.globalInitBinder = globalInitBinder;
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		globalInitBinder.initBinder(binder);
 	}
 
 	// params = title || artistName

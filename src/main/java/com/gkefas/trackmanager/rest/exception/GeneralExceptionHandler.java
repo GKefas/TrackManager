@@ -45,18 +45,6 @@ public class GeneralExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
 
-	// Handle timeout exceptions (408 Request Timeout)
-	@ExceptionHandler(SocketTimeoutException.class)
-	public ResponseEntity<ErrorResponse> handleException() {
-		ErrorResponse errorResponse = new ErrorResponse();
-		errorResponse.setStatus(HttpStatus.REQUEST_TIMEOUT.value());
-		errorResponse.setMessage("Request timed out. Please try again later.");
-		errorResponse.setErrorTimeStamp(System.currentTimeMillis());
-
-		return new ResponseEntity<>(errorResponse, HttpStatus.REQUEST_TIMEOUT);
-	}
-
-
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	public ResponseEntity<ErrorResponse> handleException(MethodArgumentTypeMismatchException e) {
 		StringBuilder wrongIdProvided = new StringBuilder("unknown");

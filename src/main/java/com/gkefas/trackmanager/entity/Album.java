@@ -24,7 +24,7 @@ public class Album {
 	@JoinColumn(name = "ArtistId", referencedColumnName = "ArtistId")
 	private Artist artist;
 
-	@OneToMany(mappedBy = "album")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "album")
 	private List<Track> tracks = new ArrayList<>();
 
 	// No-argument constructor for JPA

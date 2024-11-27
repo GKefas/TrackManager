@@ -3,11 +3,10 @@ package com.gkefas.trackmanager.rest.controller;
 import com.gkefas.trackmanager.dto.TrackDTO;
 import com.gkefas.trackmanager.rest.exception.NotFoundException;
 import com.gkefas.trackmanager.service.TrackService;
+import com.gkefas.trackmanager.util.GlobalInitBinder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +16,17 @@ import java.util.Optional;
 public class TrackController {
 
 	private final TrackService trackService;
+	private final GlobalInitBinder globalInitBinder;
 
 	@Autowired
-	public TrackController(TrackService trackService) {
+	public TrackController(TrackService trackService, GlobalInitBinder globalInitBinder) {
 		this.trackService = trackService;
+		this.globalInitBinder = globalInitBinder;
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		globalInitBinder.initBinder(binder);
 	}
 
 	@GetMapping({"", "/"})
