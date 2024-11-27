@@ -12,7 +12,7 @@
     <artifactId>trackmanager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>TrackManager</name>
-    <description>A Spring Boot project for managing music data with an API and admin interface using Thymeleaf
+    <description>A Spring Boot project for managing music data with an API and admin UI using Thymeleaf
     </description>
     <url/>
     <licenses>
@@ -25,8 +25,8 @@
     <developers>
         <developer>
             <name>George Kefas</name>
-            <email>kefasgeo04@gmail.com</email> <!-- Your email address -->
-            <url>https://github.com/GKefas/</url> <!-- Your GitHub or personal website -->
+            <email>kefasgeo04@gmail.com</email>
+            <url>https://github.com/GKefas/</url>
             <roles>
                 <role>Developer</role>
             </roles>
