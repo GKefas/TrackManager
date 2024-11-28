@@ -29,17 +29,17 @@ public class Track {
 	private Double unitPrice;
 
 	// Many-to-one relationship with Album
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
 	@JoinColumn(name = "AlbumId", referencedColumnName = "AlbumId")
 	private Album album;
 
 	// Many-to-one relationship with Genre
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
 	@JoinColumn(name = "GenreId", referencedColumnName = "GenreId")
 	private Genre genre;
 
 	// Many-to-one relationship with MediaTypeRepository
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
 	@JoinColumn(name = "MediaTypeId", referencedColumnName = "MediaTypeId")
 	private MediaType mediaType;
 
