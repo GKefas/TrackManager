@@ -5,6 +5,10 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Data Transfer Object (DTO) representing an album.<br>
+ * Used for transferring album information along with its associated tracks.
+ */
 @Getter
 @Setter
 public class AlbumDTO {

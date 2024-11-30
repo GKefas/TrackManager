@@ -1,9 +1,12 @@
 package com.gkefas.trackmanager.dto;
 
-import com.gkefas.trackmanager.entity.Track;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Data Transfer Object (DTO) for a music track.<br>
+ * Used for transferring track information.
+ */
 @Getter
 @Setter
 public class TrackDTO {

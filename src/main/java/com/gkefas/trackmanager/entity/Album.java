@@ -28,11 +28,8 @@ public class Album {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "album")
 	private List<Track> tracks = new ArrayList<>();
 
-	// No-argument constructor for JPA
 	public Album() {
 	}
-
-	// Optionally, constructor with fields if needed
 
 	public Album(Integer albumId, String title, Artist artist, List<Track> tracks) {
 		this.albumId = albumId;

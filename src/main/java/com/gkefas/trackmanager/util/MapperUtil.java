@@ -10,10 +10,28 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
-
+/**
+ * A utility class for mapping entities to their respective Data Transfer Objects (DTOs).
+ * <p>This class provides methods to convert {@link Artist}, {@link Album}, and {@link Track} entities into their corresponding DTOs.</p>
+ * <p>It simplifies the process of transferring data between the persistence layer (entities) and the presentation layer (DTOs).</p>
+ * <p>The class is marked with {@link Component} to allow Spring to manage it as a bean.</p>
+ *
+ * @see ArtistDTO
+ * @see AlbumDTO
+ * @see TrackDTO
+ * @see Artist
+ * @see Album
+ * @see Track
+ */
 @Component
 public class MapperUtil {
 
+	/**
+	 * Converts an {@link Artist} entity to an {@link ArtistDTO}.
+	 *
+	 * @param artist the {@link Artist} entity to be converted.
+	 * @return the corresponding {@link ArtistDTO} or {@code null} if the input entity is {@code null}.
+	 */
 	public ArtistDTO toArtistDTO(Artist artist) {
 		if (artist == null) {
 			return null;
@@ -21,10 +39,16 @@ public class MapperUtil {
 		ArtistDTO artistDTO = new ArtistDTO();
 		artistDTO.setArtistId(artist.getArtistId());
 		artistDTO.setName(artist.getName());
-		// Do not map tracks here, it's handled in the service
+		// Do not map tracks here, it's handled in the
 		return artistDTO;
 	}
 
+	/**
+	 * Converts an {@link Album} entity to an {@link AlbumDTO}.
+	 *
+	 * @param album the {@link Album} entity to be converted.
+	 * @return the corresponding {@link AlbumDTO} or {@code null} if the input entity is {@code null}.
+	 */
 	public AlbumDTO toAlbumDTO(Album album) {
 		if (album == null) {
 			return null;
@@ -42,6 +66,12 @@ public class MapperUtil {
 		return albumDTO;
 	}
 
+	/**
+	 * Converts a {@link Track} entity to a {@link TrackDTO}.
+	 *
+	 * @param track the {@link Track} entity to be converted.
+	 * @return the corresponding {@link TrackDTO} or {@code null} if the input entity is {@code null}.
+	 */
 	public TrackDTO toTrackDTO(Track track) {
 		if (track == null) {
 			return null;

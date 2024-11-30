@@ -10,6 +10,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing tracks. It provides methods to retrieve tracks
+ * <p>Methods:</p>
+ * <ul>
+ *   <li>{@link #getAllTracks()} - Retrieves a list of all tracks.</li>
+ *   <li>{@link #getTrackById(int id)} - Retrieves a track by its ID.</li>
+ * </ul>
+ * <p>This service interacts with the {@link TrackRepository} to fetch track data
+ * and uses {@link MapperUtil} to convert the {@link Track} entities into {@link TrackDTO} objects
+ * for the response.</p>
+ *
+ * @see TrackRepository
+ * @see MapperUtil
+ * @see TrackDTO
+ */
 @Service
 public class TrackService {
 

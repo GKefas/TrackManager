@@ -4,6 +4,7 @@ import com.gkefas.trackmanager.dto.ArtistDTO;
 import com.gkefas.trackmanager.dto.TrackDTO;
 import com.gkefas.trackmanager.entity.Album;
 import com.gkefas.trackmanager.entity.Artist;
+import com.gkefas.trackmanager.entity.Track;
 import com.gkefas.trackmanager.repository.AlbumRepository;
 import com.gkefas.trackmanager.repository.ArtistRepository;
 import com.gkefas.trackmanager.repository.TrackRepository;
@@ -15,6 +16,25 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service class that handles business logic related to artists, albums, and tracks.
+ * It provides methods to retrieve artist information along with their associated albums and tracks.
+ * <p>Methods:</p>
+ * <ul>
+ *   <li>{@link #getAllArtists()} - Retrieves all artists from the database.</li>
+ *   <li>{@link #getArtistByName(String name)} - Retrieves an artist by their name (case-insensitive).</li>
+ *   <li>{@link #getArtistWithTracksById(Integer artistId)} - Retrieves an artist by their ID along with their albums and tracks.</li>
+ * </ul>
+ * <p>This service interacts with the repositories for {@link Artist}, {@link Album}, and {@link Track} entities.</p>
+ * <p>The {@link MapperUtil} is used to convert entity objects to DTOs (Data Transfer Objects) for the response.</p>
+ *
+ * @see ArtistRepository
+ * @see TrackRepository
+ * @see AlbumRepository
+ * @see MapperUtil
+ * @see ArtistDTO
+ * @see TrackDTO
+ */
 @Service
 public class ArtistService {
 
@@ -37,10 +57,17 @@ public class ArtistService {
 
 	public Artist getArtistByName(String name) {
 		return artistRepository.findByNameIgnoreCase(name);
-
 	}
 
-	public ArtistDTO getArtistWithTracks(Integer artistId) {
+	/**
+	 * Retrieves an artist by their ID along with the list of their tracks.
+	 * This method also fetches all albums for the artist and collects tracks from each album.
+	 *
+	 * @param artistId the ID of the artist.
+	 * @return an {@link ArtistDTO} containing artist details along with their tracks.
+	 * @throws RuntimeException if the artist is not found.
+	 */
+	public ArtistDTO getArtistWithTracksById(Integer artistId) {
 		// Fetch the artist by ID
 		Optional<Artist> artistOptional = artistRepository.findById(artistId);
 		if (artistOptional.isEmpty()) {

@@ -45,8 +45,8 @@ public class AlbumController {
 	/**
 	 * Constructs an AlbumController with the specified AlbumService and GlobalInitBinder.
 	 *
-	 * @param albumService      the service for handling album-related operations.
-	 * @param globalInitBinder  the binder for global initialization settings.
+	 * @param albumService     the service for handling album-related operations.
+	 * @param globalInitBinder the binder for global initialization settings.
 	 */
 	@Autowired
 	public AlbumController(AlbumService albumService, GlobalInitBinder globalInitBinder) {
@@ -69,10 +69,12 @@ public class AlbumController {
 	 * If no filters are provided, returns all albums.
 	 *
 	 * @param params a map containing optional Query Parameters:
-	 *                - "title": part or full title of the album
-	 *                - "artistName": part or full name of the artist
-	 *                If no filters are provided, all albums will be returned.
-	 * @return a list of AlbumDTOs matching the provided filters.
+	 *               <ul>
+	 *                   <li>"title": part or full title of the album</li>
+	 *                   <li>"artistName": part or full name of the artist</li>
+	 *               </ul>
+	 * @return a list of all AlbumsDTOs if no params provided OR<br>
+	 * a list of AlbumDTOs matching the provided filters
 	 */
 	@GetMapping({"", "/"})
 	public List<AlbumDTO> getAllAlbums(@RequestParam(required = false) Map<String, String> params) {
