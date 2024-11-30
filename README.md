@@ -5,7 +5,7 @@ TrackManager is a Spring Boot application that provides an API for managing musi
 ## Features
 
 - **REST API**: Exposes endpoints for managing music data (artists, albums, and tracks).
-- **Admin Interface**: A CRUD interface for administrators to manage music data, built with Thymeleaf.
+- **Admin Interface**: A CRUD interface for administrators to manage music data, built with Thymeleaf. (Coming Soon)
 - **Database Integration**: Uses JPA to interact with a relational database (MySQL).
 
 ## Technologies Used
