@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 config/**
+TrackManger Report.pdf
 
 ### STS ###
 .apt_generated

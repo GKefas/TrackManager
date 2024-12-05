@@ -56,8 +56,7 @@ public class AlbumService {
 
 	/**
 	 * Retrieves albums based on provided filters.
-	 * <p>This method fetches albums filtered by artist name and/or album title. It returns all
-	 * albums if no filters are provided.</p>
+	 * <p>This method fetches albums filtered by artist name and/or album title.</p>
 	 *
 	 * @param filters a map containing optional filters:<br>
 	 *                 - "artistName": part or full name of the artist<br>
