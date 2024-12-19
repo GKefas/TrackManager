@@ -42,6 +42,12 @@
                 color: #0c5460; /* Dark blue text */
             }
 
+            .alert-warning {
+                background-color: #fff3cd; /* Soft yellow background */
+                border-color: #ffeeba; /* Light yellow border */
+                color: #856404; /* Dark yellow text */
+            }
+
         </style>
     </head>
     <body>
@@ -49,6 +55,27 @@
             <h1 class = "text-dark">TrackManager API Documentation v1</h1>
             <p>This is the documentation for the Track Manager API. Below are the available endpoints and their
                 descriptions:</p>
+
+            <!-- Token Section -->
+            <div class = "alert alert-warning">
+                <h4 class = "alert-heading">API Access Token</h4>
+                <p>To access the endpoints under <strong>/api/**</strong>, you need to provide a valid API token in the
+                    request header. Below is the process:</p>
+                <ul>
+                    <li><strong>Obtaining the Token:</strong> The token is provided by the API server. You can request
+                        from me by send me a message on my <a
+                                href = "https://www.linkedin.com/in/kefasgeorge/" target = "_blank">LinkedIn</a>
+                    </li>
+                    <li><strong>Using the Token:</strong> Include the token in the request header as follows "token"
+                    </li>
+                    <li><strong>Access Denied:</strong> If the token is invalid or missing, you will receive a <code>403
+                        Forbidden</code> error.
+                    </li>
+
+                </ul>
+                <p>For example, you would send a request like the following to access the <code>/api/albums</code>
+                    endpoint:</p>
+            </div>
 
             <!-- Pagination and Query Parameters Section -->
             <div class = "alert alert-info">
