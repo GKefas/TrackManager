@@ -10,6 +10,8 @@ import com.gkefas.trackmanager.repository.ArtistRepository;
 import com.gkefas.trackmanager.repository.TrackRepository;
 import com.gkefas.trackmanager.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +23,8 @@ import java.util.stream.Collectors;
  * It provides methods to retrieve artist information along with their associated albums and tracks.
  * <p>Methods:</p>
  * <ul>
- *   <li>{@link #getAllArtists()} - Retrieves all artists from the database.</li>
- *   <li>{@link #getArtistByName(String name)} - Retrieves an artist by their name (case-insensitive).</li>
+ *   <li>{@link #getAllArtists(Pageable)} - Retrieves all artists from the database.</li>
+ *   <li>{@link #getArtistByName(String name,Pageable)} - Retrieves an artist by their name (case-insensitive).</li>
  *   <li>{@link #getArtistWithTracksById(Integer artistId)} - Retrieves an artist by their ID along with their albums and tracks.</li>
  * </ul>
  * <p>This service interacts with the repositories for {@link Artist}, {@link Album}, and {@link Track} entities.</p>
@@ -51,12 +53,16 @@ public class ArtistService {
 		this.mapperUtil = mapperUtil;
 	}
 
-	public List<Artist> getAllArtists() {
-		return artistRepository.findAll();
+	public List<Artist> getAllArtists(Pageable pageable) {
+		return artistRepository.findAll(pageable).getContent();
 	}
 
-	public Artist getArtistByName(String name) {
-		return artistRepository.findByNameIgnoreCase(name);
+	public Page<Artist> getArtistByName(String name, Pageable pageable) {
+		return artistRepository.findByNameIgnoreCase(name, pageable);
+	}
+
+	public long getArtistsCount() {
+		return artistRepository.count();
 	}
 
 	/**

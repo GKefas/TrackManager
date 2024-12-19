@@ -1,6 +1,8 @@
 package com.gkefas.trackmanager.repository;
 
 import com.gkefas.trackmanager.entity.Track;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,7 +30,7 @@ public interface TrackRepository extends JpaRepository<Track, Integer> {
 			"AND (:mediaType IS NULL OR LOWER(mt.name) LIKE LOWER(CONCAT('%', :mediaType, '%'))) " +
 			"AND (:artistName IS NULL OR LOWER(ar.name) LIKE LOWER(CONCAT('%', :artistName, '%'))) " +
 			"AND (:title IS NULL OR LOWER(a.title) LIKE LOWER(CONCAT('%', :title, '%'))) ")
-	List<Track> findByFilters(
+	Page<Track> findByFilters(
 			@Param("name") String name,
 			@Param("composer") String composer,
 			@Param("milliseconds") Integer milliseconds,
@@ -37,5 +39,6 @@ public interface TrackRepository extends JpaRepository<Track, Integer> {
 			@Param("genre") String genre,
 			@Param("mediaType") String mediaType,
 			@Param("artistName") String artistName,
-			@Param("title") String title);
+			@Param("title") String title,
+			Pageable pageable);
 }

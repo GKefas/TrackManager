@@ -6,6 +6,8 @@ import com.gkefas.trackmanager.rest.exception.NotFoundException;
 import com.gkefas.trackmanager.service.ArtistService;
 import com.gkefas.trackmanager.util.GlobalInitBinder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,16 +65,17 @@ public class ArtistController {
 	 * Retrieves a list of artists, optionally filtered by the artist's name.
 	 * If no name is provided, all artists are returned.
 	 *
-	 * @param name the name of the artist to filter by (optional)
+	 * @param name     the name of the artist to filter by (optional)
+	 * @param pageable for pagination
 	 * @return a list of artists matching the provided name or<br>
 	 * all artists if no name is given
 	 */
 	@GetMapping({"", "/"})
-	public List<Artist> getAllAlbums(@RequestParam(required = false) String name) {
+	public List<Artist> getAllArtists(@RequestParam(required = false) String name, Pageable pageable) {
 		if (name == null || name.isEmpty())
-			return artistService.getAllArtists();
-		Artist artist = artistService.getArtistByName(name);
-		return artist != null ? List.of(artist) : List.of();
+			return artistService.getAllArtists(pageable);
+		Page<Artist> artists = artistService.getArtistByName(name, pageable);
+		return artists != null ? artists.getContent() : List.of();
 	}
 
 	/**
@@ -84,7 +87,7 @@ public class ArtistController {
 	 */
 	@GetMapping("/{id}")
 	public ArtistDTO getArtistById(@PathVariable Integer id) {
-		if (id <= 0 || id > artistService.getAllArtists().size()) {
+		if (id <= 0 || id > artistService.getArtistsCount()) {
 			throw new NotFoundException("Artist id not found - " + id);
 		}
 		return artistService.getArtistWithTracksById(id);

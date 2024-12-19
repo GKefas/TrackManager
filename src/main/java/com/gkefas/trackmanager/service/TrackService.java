@@ -4,6 +4,8 @@ import com.gkefas.trackmanager.dto.TrackDTO;
 import com.gkefas.trackmanager.entity.Track;
 import com.gkefas.trackmanager.repository.TrackRepository;
 import com.gkefas.trackmanager.util.MapperUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,10 +54,11 @@ public class TrackService {
 	/**
 	 * Retrieves tracks based on provided filters.
 	 *
-	 * @param filters a map containing optional filters:
+	 * @param filters  a map containing optional filters
+	 * @param pageable for pagination
 	 * @return a list of {@link TrackDTO} objects matching the provided filters.
 	 */
-	public List<TrackDTO> getTracksByFilters(Map<String, String> filters) {
+	public List<TrackDTO> getTracksByFilters(Map<String, String> filters, Pageable pageable) {
 		String name = filters.get("name");
 		String composer = filters.get("composer");
 		Integer milliseconds = filters.containsKey("milliseconds") ? Integer.valueOf(filters.get("milliseconds")) : null;
@@ -66,7 +69,7 @@ public class TrackService {
 		String artistName = filters.get("artistName");
 		String title = filters.get("title");
 
-		List<Track> tracks = trackRepository.findByFilters(
+		Page<Track> trackPage = trackRepository.findByFilters(
 				name,
 				composer,
 				milliseconds,
@@ -75,10 +78,11 @@ public class TrackService {
 				genre,
 				mediaType,
 				artistName,
-				title
+				title,
+				pageable
 		);
 
-		return tracks.stream()
+		return trackPage.stream()
 				.map(mapperUtil::toTrackDTO)
 				.collect(Collectors.toList());
 	}

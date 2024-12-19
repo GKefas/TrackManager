@@ -2,6 +2,7 @@ package com.gkefas.trackmanager.rest.controller;
 
 import com.gkefas.trackmanager.entity.MediaType;
 import com.gkefas.trackmanager.service.MediaTypeService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +31,7 @@ public class MediaTypeController {
 	}
 
 	@GetMapping({"/", ""})
-	public List<MediaType> getAllMediaTypes() {
-		return mediaTypeService.getAllMediaTypes();
+	public List<MediaType> getAllMediaTypes(Pageable pageable) {
+		return mediaTypeService.getAllMediaTypes(pageable);
 	}
 }

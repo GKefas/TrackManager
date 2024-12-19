@@ -6,6 +6,7 @@ import com.gkefas.trackmanager.dto.AlbumDTO;
 
 import com.gkefas.trackmanager.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
  * <ul>
  *   <li>{@link #getAllAlbums()} - Retrieves a list of all albums.</li>
  *   <li>{@link #getAlbumById(Integer id)} - Retrieves an album by its ID.</li>
- *   <li>{@link #getAlbumsByFilters(Map params)} - Retrieves albums filtered by artist name and/or title.</li>
+ *   <li>{@link #getAlbumsByFilters(Map, Pageable)}  - Retrieves albums filtered by artist name and/or title.</li>
  * </ul>
  * <p>This service interacts with the {@link AlbumRepository} to fetch album data
  * and uses {@link MapperUtil} to convert the {@link Album} entities into {@link AlbumDTO} objects
@@ -58,16 +59,17 @@ public class AlbumService {
 	 * Retrieves albums based on provided filters.
 	 * <p>This method fetches albums filtered by artist name and/or album title.</p>
 	 *
-	 * @param filters a map containing optional filters:<br>
+	 * @param filters  a map containing optional filters:<br>
 	 *                 - "artistName": part or full name of the artist<br>
 	 *                 - "title": part or full title of the album
+	 * @param pageable for pagination
 	 * @return a list of {@link AlbumDTO} objects matching the provided filters.
 	 */
-	public List<AlbumDTO> getAlbumsByFilters(Map<String, String> filters) {
+	public List<AlbumDTO> getAlbumsByFilters(Map<String, String> filters, Pageable pageable) {
 		String artistName = filters.get("artistName");
 		String title = filters.get("title");
 
-		List<Album> albums = albumRepository.findAlbumsByArtistAndTitle(artistName, title);
+		List<Album> albums = albumRepository.findAlbumsByArtistAndTitle(artistName, title, pageable);
 
 		return albums.stream()
 				.map(mapperUtil::toAlbumDTO)

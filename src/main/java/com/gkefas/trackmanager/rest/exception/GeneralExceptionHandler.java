@@ -58,11 +58,10 @@ public class GeneralExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorResponse> handleClientError(Exception ex) {
-		ErrorResponse errorResponse = new ErrorResponse();
-		errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-		errorResponse.setMessage(ex.getMessage());
-		errorResponse.setErrorTimeStamp(System.currentTimeMillis());
-		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		error.setMessage(ex.getMessage());
+		error.setErrorTimeStamp(System.currentTimeMillis());
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -86,6 +85,14 @@ public class GeneralExceptionHandler {
 		error.setMessage(errorMessage);
 		error.setErrorTimeStamp(System.currentTimeMillis());
 
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(IllegalPaginationParamException.class)
+	public ResponseEntity<ErrorResponse> handleInvalidPageNumber(IllegalPaginationParamException e) {
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		error.setMessage(e.getMessage());
+		error.setErrorTimeStamp(System.currentTimeMillis());
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 

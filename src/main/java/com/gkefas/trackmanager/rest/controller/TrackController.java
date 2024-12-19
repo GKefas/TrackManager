@@ -5,6 +5,7 @@ import com.gkefas.trackmanager.rest.exception.NotFoundException;
 import com.gkefas.trackmanager.service.TrackService;
 import com.gkefas.trackmanager.util.GlobalInitBinder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,10 +60,20 @@ public class TrackController {
 		globalInitBinder.initBinder(binder);
 	}
 
+	/**
+	 * Retrieves a list of tracks based on the provided filters.
+	 * If no filters are provided, returns all tracks.
+	 *
+	 * @param params a map containing optional Query Parameters:
+	 * @param pageable for pagination
+	 * @return a list of all TrackDTOs if no params provided OR<br>
+	 * a list of TrackDTOs matching the provided filters
+	 */
 	@GetMapping({"", "/"})
-	public List<TrackDTO> getAllTracks(@RequestParam(required = false) Map<String, String> params) {
+	public List<TrackDTO> getAllTracks(@RequestParam(required = false) Map<String, String> params,
+	                                   Pageable pageable) {
 		return params.isEmpty() ? trackService.getAllTracks()
-				: trackService.getTracksByFilters(params);
+				: trackService.getTracksByFilters(params, pageable);
 	}
 
 	/**

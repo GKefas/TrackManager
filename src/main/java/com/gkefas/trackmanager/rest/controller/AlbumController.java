@@ -5,6 +5,7 @@ import com.gkefas.trackmanager.rest.exception.NotFoundException;
 import com.gkefas.trackmanager.service.AlbumService;
 import com.gkefas.trackmanager.util.GlobalInitBinder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,25 +69,26 @@ public class AlbumController {
 	 * Retrieves a list of albums based on the provided filters.
 	 * If no filters are provided, returns all albums.
 	 *
-	 * @param params a map containing optional Query Parameters:
-	 *               <ul>
-	 *                   <li>"title": part or full title of the album</li>
-	 *                   <li>"artistName": part or full name of the artist</li>
-	 *               </ul>
+	 * @param params   a map containing optional Query Parameters:
+	 *                 <ul>
+	 *                     <li>"title": part or full title of the album</li>
+	 *                     <li>"artistName": part or full name of the artist</li>
+	 *                 </ul>
+	 * @param pageable for pagination
 	 * @return a list of all AlbumsDTOs if no params provided OR<br>
 	 * a list of AlbumDTOs matching the provided filters
 	 */
 	@GetMapping({"", "/"})
-	public List<AlbumDTO> getAllAlbums(@RequestParam(required = false) Map<String, String> params) {
-		return params.isEmpty() ? albumService.getAllAlbums()
-				: albumService.getAlbumsByFilters(params);
+	public List<AlbumDTO> getAllAlbums(@RequestParam(required = false) Map<String, String> params, Pageable pageable) {
+		return params.isEmpty() || pageable == null ? albumService.getAllAlbums()
+				: albumService.getAlbumsByFilters(params, pageable);
 	}
 
 	/**
 	 * Retrieves an album by its unique ID.
 	 *
 	 * @param id the unique identifier of the album.
-	 * @return an Optional containing the AlbumDTO if found.
+	 * @return an {@link Optional<AlbumDTO>} containing the AlbumDTO if found.
 	 * @throws NotFoundException if the album with the given ID does not exist.
 	 */
 	@GetMapping({"/{id}"})
