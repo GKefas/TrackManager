@@ -1,7 +1,6 @@
 # TrackManager
 
-**Note**: This application is still in development and **not in production** yet. API access is currently restricted,
-and you can only access it with a provided token.
+**Note**: This application is still in development and **not in production** yet.
 
 TrackManager is a Spring Boot application that provides an API for getting music data, including artists, albums, and
 tracks.
