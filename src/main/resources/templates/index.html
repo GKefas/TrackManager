@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <title>API Documentation</title>
+        <!-- Bootstrap CSS -->
+        <link href = "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel = "stylesheet">
+        <style>
+            body {
+                background-color: #f8f9fa; /* Light gray background */
+            }
+
+            .container {
+                margin-top: 50px;
+            }
+
+            h1 {
+                color: #495057; /* Dark gray for the title */
+            }
+
+            .table thead {
+                background-color: #007bff; /* Blue header */
+                color: white;
+            }
+
+            .table tbody tr:nth-child(odd) {
+                background-color: #e9ecef; /* Light gray for odd rows */
+            }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #ffffff; /* White for even rows */
+            }
+
+            .table tbody tr:hover {
+                background-color: #f1f3f5; /* Subtle hover effect */
+            }
+
+            .alert-info {
+                background-color: #d1ecf1; /* Soft blue background for the info box */
+                border-color: #bee5eb; /* Light blue border */
+                color: #0c5460; /* Dark blue text */
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class = "container mt-4">
+            <h1 class = "text-dark">TrackManager<br> API Documentation v1</h1>
+            <p>This is the documentation for the Track Manager API. Below are the available endpoints and their
+                descriptions:</p>
+
+            <!-- Pagination and Query Parameters Section -->
+            <div class = "alert alert-info">
+                <h4 class = "alert-heading">Pagination & Query Parameters</h4>
+                <p>All the endpoints that support listing (GET requests) support pagination and optional filtering. You
+                    can use some of the following query parameters based on endpoint:</p>
+                <ul>
+                    <li><strong>page</strong>: The page number for pagination (default is 0, which represents the first
+                        page).
+                    </li>
+                    <li><strong>size</strong>: The number of items per page default is 10 if u only provided page
+                        otherwise it will retrieve all data.
+                    </li>
+                    <li><strong>title</strong>: Filter albums or tracks by title (optional).</li>
+                    <li><strong>artistName</strong>: Filter albums or tracks by artist name (optional).</li>
+                    <li><strong>name</strong>: Filter artists or genres by name (optional).</li>
+                </ul>
+                <p>For example, to retrieve the first page of albums sorted by title in ascending order, you would use
+                    the following URL:</p>
+                <pre><code>/api/albums?page=0&size=10</code></pre>
+            </div>
+
+            <!-- API Endpoints Documentation Table -->
+            <table class = "table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Method</th>
+                        <th>Description</th>
+                        <th>Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Album Endpoint -->
+                    <tr>
+                        <td>/api/albums</td>
+                        <td>GET</td>
+                        <td>Retrieves all albums or filters albums by title/artistName.</td>
+                        <td>List of AlbumDTOs (id, title, artistName)</td>
+                    </tr>
+                    <tr>
+                        <td>/api/albums/{id}</td>
+                        <td>GET</td>
+                        <td>Retrieves an album by its unique ID.</td>
+                        <td>AlbumDTO (id, title, artistName)</td>
+                    </tr>
+
+                    <!-- Artist Endpoint -->
+                    <tr>
+                        <td>/api/artists</td>
+                        <td>GET</td>
+                        <td>Retrieves all artists or filters by name.</td>
+                        <td>List of ArtistDTOs (id, name)</td>
+                    </tr>
+                    <tr>
+                        <td>/api/artists/{id}</td>
+                        <td>GET</td>
+                        <td>Retrieves an artist by their unique ID with tracks.</td>
+                        <td>ArtistDTO (id, name, tracks)</td>
+                    </tr>
+
+                    <!-- Genre Endpoint -->
+                    <tr>
+                        <td>/api/genre</td>
+                        <td>GET</td>
+                        <td>Retrieves all genres.</td>
+                        <td>List of Genre (id, name)</td>
+                    </tr>
+
+                    <!-- MediaType Endpoint -->
+                    <tr>
+                        <td>/api/mediaType</td>
+                        <td>GET</td>
+                        <td>Retrieves all media types.</td>
+                        <td>List of MediaType (id, name)</td>
+                    </tr>
+
+                    <!-- Track Endpoint -->
+                    <tr>
+                        <td>/api/tracks</td>
+                        <td>GET</td>
+                        <td>Retrieves all tracks or filters tracks by parameters.</td>
+                        <td>List of TrackDTOs (id, title, duration)</td>
+                    </tr>
+                    <tr>
+                        <td>/api/tracks/{id}</td>
+                        <td>GET</td>
+                        <td>Retrieves a track by its unique ID.</td>
+                        <td>TrackDTO (id, title, duration)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bootstrap JS and dependencies -->
+        <script src = "https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src = "https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+        <script src = "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>
