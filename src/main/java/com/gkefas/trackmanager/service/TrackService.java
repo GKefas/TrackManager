@@ -7,6 +7,7 @@ import com.gkefas.trackmanager.util.MapperUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -47,4 +48,39 @@ public class TrackService {
 		Optional<Track> track = trackRepository.findById(id);
 		return track.map(mapperUtil::toTrackDTO);
 	}
+
+	/**
+	 * Retrieves tracks based on provided filters.
+	 *
+	 * @param filters a map containing optional filters:
+	 * @return a list of {@link TrackDTO} objects matching the provided filters.
+	 */
+	public List<TrackDTO> getTracksByFilters(Map<String, String> filters) {
+		String name = filters.get("name");
+		String composer = filters.get("composer");
+		Integer milliseconds = filters.containsKey("milliseconds") ? Integer.valueOf(filters.get("milliseconds")) : null;
+		Integer bytes = filters.containsKey("bytes") ? Integer.valueOf(filters.get("bytes")) : null;
+		Float unitPrice = filters.containsKey("unitPrice") ? Float.valueOf(filters.get("unitPrice")) : null;
+		String genre = filters.get("genre");
+		String mediaType = filters.get("mediaType");
+		String artistName = filters.get("artistName");
+		String title = filters.get("title");
+
+		List<Track> tracks = trackRepository.findByFilters(
+				name,
+				composer,
+				milliseconds,
+				bytes,
+				unitPrice,
+				genre,
+				mediaType,
+				artistName,
+				title
+		);
+
+		return tracks.stream()
+				.map(mapperUtil::toTrackDTO)
+				.collect(Collectors.toList());
+	}
 }
+

@@ -9,6 +9,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -39,7 +40,7 @@ public class TrackController {
 	/**
 	 * Constructor for initializing the TrackController.
 	 *
-	 * @param trackService the service class for track-related operations
+	 * @param trackService     the service class for track-related operations
 	 * @param globalInitBinder the global binder to handle data binding
 	 */
 	@Autowired
@@ -59,15 +60,9 @@ public class TrackController {
 	}
 
 	@GetMapping({"", "/"})
-	// FIXME: MAKE IT TO RETURN AN ARRAY OF ONLY CONTAINS FILTERS IF THERE ARENT LIKES RETURN []
-	// FIXME: IF THERE ARENT PARAMS THEN ONLY RETURN ALL ALBUMS
-	// FIXME: AND EXCEPTION HANDLING
-	public List<TrackDTO> getAllTracks() {
-		List<TrackDTO> tracks = trackService.getAllTracks();
-		if (tracks.isEmpty()) {
-			throw new NotFoundException("No tracks found");
-		}
-		return tracks;
+	public List<TrackDTO> getAllTracks(@RequestParam(required = false) Map<String, String> params) {
+		return params.isEmpty() ? trackService.getAllTracks()
+				: trackService.getTracksByFilters(params);
 	}
 
 	/**

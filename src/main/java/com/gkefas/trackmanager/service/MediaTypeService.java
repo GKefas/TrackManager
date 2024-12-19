@@ -2,6 +2,7 @@ package com.gkefas.trackmanager.service;
 
 import com.gkefas.trackmanager.entity.MediaType;
 import com.gkefas.trackmanager.repository.MediaTypeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 public class MediaTypeService {
 	private final MediaTypeRepository mediaTypeRepository;
 
+	@Autowired
 	public MediaTypeService(MediaTypeRepository mediaTypeRepository) {
 		this.mediaTypeRepository = mediaTypeRepository;
 	}
