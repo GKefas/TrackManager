@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 public class TokenConfig {
-	@Value("${access.code}")
-	private String accessCode;
+	@Value("${token}")
+	private String token;
 }

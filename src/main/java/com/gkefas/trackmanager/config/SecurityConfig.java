@@ -58,7 +58,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 								.requestMatchers("/api/**")
 								.access((authentication, context) -> {
 									String token = context.getRequest().getHeader("token");
-									boolean granted = propertyConfig.getAccessCode().equals(token);
+									boolean granted = propertyConfig.getToken().equals(token);
 									String remoteAddr = context.getRequest().getRemoteAddr();
 
 									if (!granted)
